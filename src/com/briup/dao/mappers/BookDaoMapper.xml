@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+			"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.briup.dao.BookDaoMapper">
+	
+	<!-- 查询所有一级菜单 -->
+	<select id="findAllOneCategory" resultType="Category">
+		select id,name,description
+		from e_category
+		where parent_id is null
+	</select>
+	
+	<!-- 根据一级菜单id查询二级菜单 -->
+	<!-- <resultMap type="Category" id="ResultOneCategory">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+	</resultMap>
+	<resultMap type="Category" id="ResultTwoCategory">
+		<id property="id" column="id"/>
+		<result property="name" column="name"/>
+		<result property="description" column="description"/>
+		<collection property="category_detail" resultMap="ResultOneCategory"/>
+	</resultMap>
+	<select id="findSubCategorys" parameterType="int" resultMap="ResultTwoCategory">
+		select cate2.id,cate2.name,cate2.description,cate2.parent_id
+		from e_category cate2 left outer join e_category cate1
+		on cate1.id = cate2.parent_id
+		where parent_id is not null and cate2.parent_id=#{parent_id }
+	</select> -->
+	
+	<!-- 查询二级菜单 -->
+	<select id="findAllTwoCategory" parameterType="int" resultType="Category">
+		select id,name,description,parent_id
+		from e_category
+		where parent_id=#{id }
+	</select>
+	
+	<!-- 查询所有图书 -->
+	<select id="findAllBook" resultType="Book">
+		select * from e_book
+	</select>
+	
+	<!-- 根据id查询图书详细信息 -->
+	<select id="findBookById" parameterType="int" resultType="Book">
+		select * from e_book where id=#{id }
+	</select>
+	
+	 
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+			"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 用来设置变量(变量名=变量值) -->
+	<!-- 外部文件优先级高于配置文件 -->
+	<properties resource="db.properties"/>
+	 
+	<!-- 定义类型别名  给类取一个名字  映射文件中 -->
+	<!-- 两种方法同时使用都可以，但尽量不要同时写  -->
+	<typeAliases>
+	 	 <package name="com.briup.bean"/> 
+	</typeAliases>
+	 
+	<!-- 定义数据库的环境   可以定义多个环境   比如同时配置oracle和mysql数据库 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="POOLED">
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				<property name="username" value="${jdbc.username}" />
+				<property name="password" value="${jdbc.password}" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 指定映射文件的路径   可以指定多个映射文件 -->
+	<!-- resource属性用来指定在classpath中的mapper文件。
+		 url属性用来通过完全文件系统路径或者web URL地址来指向mapper文件
+		 class属性用来指向一个mapper接口
+		 package属性用来指向可以找到Mapper接口的包名 -->
+	<mappers>
+		<!-- <mapper class="com.briup.dao.CustomerDaoMapper"/>  -->
+		<!-- <package name="com.briup.dao"/> -->
+		<mapper resource="com/briup/dao/mappers/CustomerDaoMapper.xml"/>
+		<mapper resource="com/briup/dao/mappers/BookDaoMapper.xml"/>
+	</mappers>
+
+</configuration>
